@@ -5,6 +5,10 @@ public class InputManager : MonoBehaviour
     public static InputManager Instance { get; private set; }
     
     public Vector2 MoveInput { get; private set; }
+    public bool AttackPressed { get; private set; }
+    public bool DefendPressed { get; private set; }
+    public bool JumpPressed { get; private set; }
+    public bool MagicPressed { get; private set; }
 
     private void Awake()
     {
@@ -18,9 +22,14 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    public void HandleAttackButtonClicked()
+    public void HandleAttackButtonPressed()
     {
-        Debug.Log("ATTACK Clicked");
+        AttackPressed = true;
+    }
+
+    public void HandleAttackButtonReleased()
+    {
+        AttackPressed = false;
     }
 
     public void HandleAttackButtonHoverEnter()
@@ -33,9 +42,14 @@ public class InputManager : MonoBehaviour
         Debug.Log("ATTACK Hover Exit");
     }
     
-    public void HandleDefendButtonClicked()
+    public void HandleDefendButtonPressed()
     {
-        Debug.Log("DEFEND Clicked");
+        DefendPressed = true;
+    }
+    
+    public void HandleDefendButtonReleased()
+    {
+        DefendPressed = false;
     }
     
     public void HandleDefendButtonHoverEnter()
@@ -48,9 +62,14 @@ public class InputManager : MonoBehaviour
         Debug.Log("DEFEND Hover Exit");
     }
     
-    public void HandleJumpButtonClicked()
+    public void HandleJumpButtonPressed()
     {
-        Debug.Log("JUMP Clicked");
+        JumpPressed = true;
+    }
+    
+    public void HandleJumpButtonReleased()
+    {
+        JumpPressed = false;
     }
     
     public void HandleJumpButtonHoverEnter()
@@ -63,9 +82,14 @@ public class InputManager : MonoBehaviour
         Debug.Log("JUMP Hover Exit");
     }
     
-    public void HandleMagicButtonClicked()
+    public void HandleMagicButtonPressed()
     {
-        Debug.Log("MAGIC Clicked");
+        MagicPressed = true;
+    }
+    
+    public void HandleMagicButtonReleased()
+    {
+        MagicPressed = false;
     }
     
     public void HandleMagicButtonHoverEnter()

@@ -1,14 +1,15 @@
-using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
-public class HoverEvents : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class UIButtonEvents : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
 {
     public UnityEvent onHoverEnter;
     public UnityEvent onHoverExit;
+    public UnityEvent onPress;
+    public UnityEvent onRelease;
 
     private Button _button;
 
@@ -35,5 +36,25 @@ public class HoverEvents : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         }
         
         onHoverExit?.Invoke();
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if (!_button.interactable)
+        {
+            return;
+        }
+        
+        onPress?.Invoke();
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        if (!_button.interactable)
+        {
+            return;
+        }
+
+        onRelease?.Invoke();
     }
 }
