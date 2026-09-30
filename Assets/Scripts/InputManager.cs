@@ -2,6 +2,22 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
+    public static InputManager Instance { get; private set; }
+    
+    public Vector2 MoveInput { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+
     public void HandleAttackButtonClicked()
     {
         Debug.Log("ATTACK Clicked");
@@ -65,5 +81,6 @@ public class InputManager : MonoBehaviour
     public void HandleAnalogStickMove(Vector2 direction)
     {
         Debug.Log(direction);
+        MoveInput = direction;
     }
 }
