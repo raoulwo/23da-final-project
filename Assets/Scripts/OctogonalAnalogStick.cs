@@ -1,9 +1,20 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class OctagonalAnalogStick : MonoBehaviour, IDragHandler, IPointerDownHandler, IPointerUpHandler
 {
+    [Header("Settings")]
+    [SerializeField] private bool disabled;
+    
+    [Header("Textures")]
+    [SerializeField] private RawImage background;
+    [SerializeField] private Texture backgroundNormal;
+    [SerializeField] private Texture backgroundDisabled;
+    [SerializeField] private Texture stickNormal;
+    [SerializeField] private Texture stickDisabled;
+    
     [Header("Joystick Settings")]
     [Tooltip("Maximum distance the handle can move from the center.")]
     [SerializeField] private float handleRange = 100f;
@@ -18,6 +29,8 @@ public class OctagonalAnalogStick : MonoBehaviour, IDragHandler, IPointerDownHan
     private RectTransform handleRect;
     private Vector2 inputVector = Vector2.zero;
 
+    private RawImage _stick;
+
     void Awake()
     {
         handleRect = GetComponent<RectTransform>();
@@ -26,15 +39,29 @@ public class OctagonalAnalogStick : MonoBehaviour, IDragHandler, IPointerDownHan
         {
             backgroundRect = transform.parent.GetComponent<RectTransform>();
         }
+        
+        _stick =  GetComponent<RawImage>();
+
+        if (!disabled)
+        {
+            return;
+        }
+        
+        background.texture = backgroundDisabled;
+        _stick.texture = stickDisabled;
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (disabled) return;
+        
         OnDrag(eventData);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (disabled) return;
+        
         if (backgroundRect == null) return;
 
         Vector2 position;
@@ -71,6 +98,8 @@ public class OctagonalAnalogStick : MonoBehaviour, IDragHandler, IPointerDownHan
 
     public void OnPointerUp(PointerEventData eventData)
     {
+        if (disabled) return;
+        
         // Reset position and input when released
         inputVector = Vector2.zero;
         handleRect.anchoredPosition = Vector2.zero;
